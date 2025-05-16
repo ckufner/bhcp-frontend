@@ -7,7 +7,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/fonts',
     '@nuxt/icon',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    '@vueuse/nuxt',
   ],
   css: ['~/assets/css/main.css'],
   vite: {

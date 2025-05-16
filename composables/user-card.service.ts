@@ -54,6 +54,7 @@ export function userCardService(){
             }
         ]
     }
+    const loadMoreData = () => {}
 
     const setDetailUser = (user: UserDto) => {
         userCardStore.userDetail = user
