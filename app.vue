@@ -1,15 +1,40 @@
 <script setup lang="ts">
-import HeaderBar from "~/components/header/header-bar.vue";
-import UserDrawer from "~/components/user-drawer/user-drawer.vue";
-import UserCard from "~/components/user-card/user-card.vue";
-import ApplicationBg from "~/components/other/application-bg.vue";
+import HeaderBar from "~/components/header/header-bar.vue"
+import UserDrawer from "~/components/user-drawer/user-drawer.vue"
+import UserCard from "~/components/user-card/user-card.vue"
+import ApplicationBg from "~/components/other/application-bg.vue"
+import {userCardService} from "~/composables/user-card.service"
+
+const useUserCardService = userCardService()
+
+const handleScroll = () => {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const windowHeight = window.innerHeight;
+  const fullHeight = document.documentElement.scrollHeight;
+
+  if (scrollTop + windowHeight + 100 >= fullHeight) {
+    useUserCardService.loadMoreData()
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+})
+
+onMounted(() => {
+  useUserCardService.getAllUsers()
+})
 </script>
 <template>
   <div class="font-inter p-8 relative">
     <HeaderBar></HeaderBar>
     <SearchBar />
     <UserDrawer />
-    <UserCard :users="['test', 'test']"/>
+    <UserCard />
     <ApplicationBg />
   </div>
 </template>

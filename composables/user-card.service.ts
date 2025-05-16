@@ -5,6 +5,12 @@ import type { UserDto } from '~/types/User.dto'
 export function userCardService(){
     const userCardStore = useUserCardStore()
 
+    const initalLoadUsers = async () => {
+            const queryParam = userCardStore.userSearchQuery ? `?q=${encodeURIComponent(userCardStore.userSearchQuery )}` : ''
+            const response = await $fetch<{ data: UserDto[] }>(`/api/user${queryParam}`)
+            userCardStore.user = response.data
+    }
+
     const getAllUsers = () => {
         userCardStore.user = [
             {
@@ -51,10 +57,79 @@ export function userCardService(){
                 description: "Eva is a product manager who bridges the gap between technical teams and customer needs. She has a strong background in agile methodologies and product lifecycle management.",
                 skills: ["Agile", "Scrum", "Product Roadmapping", "Beer", "Threeshakeing", "Drinking"],
                 social: ["https://twitter.com/evamartinez", "https://linkedin.com/in/evamartinez"]
+            },
+            {
+                id: "6",
+                imageUrl: "https://example.com/images/frank.jpg",
+                name: "Frank Turner",
+                team: { name: "Operations" },
+                description: "Frank ensures that day-to-day operations run smoothly and efficiently. He is skilled in logistics, process optimization, and resource management.",
+                skills: ["Logistics", "Operations Management", "Excel", "Strategy"],
+                social: ["https://linkedin.com/in/frankturner"]
             }
         ]
     }
-    const loadMoreData = () => {}
+
+    const loadMoreData = () => {
+        const moreUsers = [
+            {
+                id: "7",
+                imageUrl: "https://example.com/images/george.jpg",
+                name: "George Black",
+                team: { name: "Support" },
+                description: "George is a tech support specialist who helps users resolve issues quickly and effectively. He’s known for his patience and deep knowledge of systems.",
+                skills: ["Customer Support", "Troubleshooting", "CRM"],
+                social: ["https://twitter.com/georgeblack"]
+            },
+            {
+                id: "8",
+                imageUrl: "https://example.com/images/hannah.jpg",
+                name: "Hannah Scott",
+                team: { name: "Finance" },
+                description: "Hannah is a financial analyst with a strong grasp of budgeting and forecasting. She plays a key role in strategic financial planning.",
+                skills: ["Budgeting", "Forecasting", "Excel", "Finance"],
+                social: ["https://linkedin.com/in/hannahscott"]
+            },
+            {
+                id: "9",
+                imageUrl: "https://example.com/images/ian.jpg",
+                name: "Ian Grey",
+                team: { name: "Legal" },
+                description: "Ian ensures compliance and manages legal risk for the company. He’s detail-oriented and knowledgeable about corporate law.",
+                skills: ["Corporate Law", "Contracts", "Compliance"],
+                social: ["https://linkedin.com/in/iangrey"]
+            },
+            {
+                id: "10",
+                imageUrl: "https://example.com/images/julia.jpg",
+                name: "Julia King",
+                team: { name: "HR" },
+                description: "Julia leads the HR team, focusing on employee engagement, hiring, and company culture. She’s passionate about people and performance.",
+                skills: ["Recruitment", "HR Management", "Onboarding"],
+                social: ["https://twitter.com/juliaking"]
+            },
+            {
+                id: "11",
+                imageUrl: "https://example.com/images/kevin.jpg",
+                name: "Kevin Hall",
+                team: { name: "IT" },
+                description: "Kevin is an IT administrator maintaining company infrastructure and security. He ensures everything stays up and running 24/7.",
+                skills: ["Networking", "Cybersecurity", "IT Support"],
+                social: ["https://github.com/kevinhall"]
+            },
+            {
+                id: "12",
+                imageUrl: "https://example.com/images/laura.jpg",
+                name: "Laura Stone",
+                team: { name: "Analytics" },
+                description: "Laura analyzes business data to generate insights that inform decisions. She’s a data wiz with strong visualization skills.",
+                skills: ["Data Analysis", "SQL", "Tableau", "Python"],
+                social: ["https://linkedin.com/in/laurastone"]
+            }
+        ]
+
+        userCardStore.user = [...userCardStore.user, ...moreUsers];
+    }
 
     const setDetailUser = (user: UserDto) => {
         userCardStore.userDetail = user
@@ -62,6 +137,8 @@ export function userCardService(){
 
     return {
         getAllUsers,
-        setDetailUser
+        setDetailUser,
+        loadMoreData,
+        initalLoadUsers
     }
 }
