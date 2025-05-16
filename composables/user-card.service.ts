@@ -1,4 +1,6 @@
 import {useUserCardStore} from "~/store/user-card.store";
+import type { UserDto } from '~/types/User.dto'
+
 
 export function userCardService(){
     const userCardStore = useUserCardStore()
@@ -53,7 +55,12 @@ export function userCardService(){
         ]
     }
 
+    const setDetailUser = (user: UserDto) => {
+        userCardStore.userDetail = user
+    }
+
     return {
-        getAllUsers
+        getAllUsers,
+        setDetailUser
     }
 }

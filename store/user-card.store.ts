@@ -3,9 +3,11 @@ import { ref } from 'vue'
 import type { UserDto } from '~/types/User.dto'
 
 export const useUserCardStore = defineStore('user-card-store', () => {
-    const user = ref([] as UserDto[])
+    const user = ref<UserDto[]>([])
+    const userDetail = ref<UserDto | null>(null)
 
     return {
-        user
+        user,
+        userDetail
     }
 })
