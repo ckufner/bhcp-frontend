@@ -16,6 +16,9 @@ export default defineNuxtConfig({
     ],
   },
   fonts: {
+    defaults: {
+      weights: [400, 600, 900],
+    },
     families: [
       {name: 'Inter', provider: 'google'}
     ]
