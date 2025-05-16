@@ -7,7 +7,10 @@ const userStore = userEditStore()
 <template>
 <div class="lg:p-8 p-4 lg:pt-24 pt-16 m-4 bg-white rounded-4xl mt-16 relative" >
   <div v-if="userStore.userData.imageUrl !== ''" class="lg:w-32 lg:h-32 w-16 h-16 rounded-full overflow-hidden absolute left-1/2 -top-8 translate-x-[-50%] border-[4px] border-white shadow-xl">
-    <img  :src="userStore.userData.imageUrl" alt="user avatar" />"
+    <img class="w-full h-full object-cover" :src="userStore.userData.imageUrl" alt="user avatar" />"
+  </div>
+  <div v-else class="lg:w-32 lg:h-32 w-16 h-16 rounded-full overflow-hidden absolute left-1/2 -top-8 translate-x-[-50%] border-[4px] border-white shadow-xl">
+    <img class="w-full" src="~/assets/img/avatar.svg" alt="user avatar" />"
   </div>
   <div class="flex flex-col lg:mb-8 mb-4">
     <label class="text-sm" for="name">Avatar Bild Url:</label>
