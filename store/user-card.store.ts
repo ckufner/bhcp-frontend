@@ -5,9 +5,11 @@ import type { UserDto } from '~/types/User.dto'
 export const useUserCardStore = defineStore('user-card-store', () => {
     const user = ref<UserDto[]>([])
     const userDetail = ref<UserDto | null>(null)
+    const userSearchQuery = ref<string>('')
 
     return {
         user,
-        userDetail
+        userDetail,
+        userSearchQuery
     }
 })

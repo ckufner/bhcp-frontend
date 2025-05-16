@@ -6,6 +6,7 @@ import UserCard from "~/components/user-card/user-card.vue";
 <template>
   <div class="font-inter p-8">
     <HeaderBar></HeaderBar>
+    <SearchBar />
     <UserDrawer />
     <UserCard :users="['test', 'test']"/>
   </div>
