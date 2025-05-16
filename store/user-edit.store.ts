@@ -3,6 +3,8 @@ import type {UserCreateDto} from "~/types/UserCreate.dto";
 
 export const userEditStore = defineStore('userEditStore', () => {
     const drawerShow = ref(true)
+    const skillToAdd = ref('')
+    const linkToAdd = ref('')
     const userData = reactive<UserCreateDto>({
         imageUrl: '',
         name: '',
@@ -14,5 +16,10 @@ export const userEditStore = defineStore('userEditStore', () => {
         social: []
     })
 
-    return {drawerShow, userData}
+    return {
+        drawerShow,
+        userData,
+        skillToAdd,
+        linkToAdd
+    }
 })

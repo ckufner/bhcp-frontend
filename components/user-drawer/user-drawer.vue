@@ -8,7 +8,7 @@ const editStore = userEditStore()
 
 <template>
 <div
-    class="absolute top-0  bg-secondary lg:w-[50vw] w-full h-screen transition-all duration-350"
+    class="fixed top-0 bg-secondary lg:w-[50vw] w-full h-screen transition-all duration-350 overflow-y-auto"
     :class="[editStore.drawerShow ? 'right-0' : 'right-[-100vw]']"
 >
   <UserEditForm />

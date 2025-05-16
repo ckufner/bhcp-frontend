@@ -63,7 +63,9 @@ const exampleUsers: UserDto[] = [
           <div class="flex items-center flex-col h-full">
             <user-card-header :name="user.name" :team="user.team.name"/>
             <user-card-description :description="user.description"/>
-            <user-card-tag-pill :skills="user.skills"/>
+            <div class="flex flex-wrap justify-center gap-2">
+            <user-card-tag-pill v-for="(skill, index) in user.skills" :key="index" :skill="skill"/>
+            </div>
           </div>
           <user-card-links :socials="user.social"/>
         </div>

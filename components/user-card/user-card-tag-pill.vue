@@ -1,13 +1,16 @@
 <script setup lang="ts">
 defineProps<{
-  skills: string[]
+  skill: string
+  clearable?: boolean
 }>()
 </script>
 
 <template>
-  <div class="flex flex-wrap justify-center gap-2">
-    <div v-for="(skill, index) in skills" :key="index" class="rounded-full bg-primary text-white py-1 px-2">
+
+    <div class="rounded-full bg-primary text-white py-1 px-2">
       {{ skill }}
     </div>
-  </div>
+    <div v-if="clearable">
+      <Icon name="mdi:close" />
+    </div>
 </template>
