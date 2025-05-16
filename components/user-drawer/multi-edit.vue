@@ -1,26 +1,27 @@
 <script setup lang="ts">
 import {userEditStore} from "~/store/user-edit.store";
 defineProps<{
-  type: 'skills' | 'link'
+  type: 'skill' | 'link'
 }>()
 const userStore = userEditStore()
+const editService = useUserEditService()
 </script>
 
 <template>
-<div class="flex flex-col">
-  <div class="relative flex flex-col lg:mb-8 mb-4">
-    <label class="text-sm" for="name">{{type === 'skills' ? 'Skills:' : 'Links:'}}</label>
-    <input v-if="type === 'skills'" class="bg-white border border-text p-2 rounded" id="name" type="text" v-model="userStore.skillToAdd" />
-    <input v-else class="bg-white border border-text p-2 rounded" id="name" type="text" v-model="userStore.skillToAdd" />
-    <button :title="type === 'skills' ? 'Skill hinzufügen' : 'Link hinzufügen'" class="bg-gray-200 w-[39px] h-[39px] absolute rounded right-[1px] bottom-[1px]">
+<div class="flex flex-col mb-4">
+  <div class="relative flex flex-col">
+    <label class="text-sm" for="name">{{type === 'skill' ? 'Skills:' : 'Links:'}}</label>
+    <input v-if="type === 'skill'" class="bg-white border border-text p-2 rounded" id="name" type="text" v-model="userStore.skillToAdd" @keyup.enter.stop="editService.addToList(type)"/>
+    <input v-else class="bg-white border border-text p-2 rounded" id="name" type="text" v-model="userStore.linkToAdd" @keyup.enter.stop="editService.addToList(type)" />
+    <button @click="editService.addToList(type)" :title="type === 'skill' ? 'Skill hinzufügen' : 'Link hinzufügen'" class="bg-gray-200 w-[39px] h-[39px] absolute rounded right-[1px] bottom-[1px]">
       <Icon name="mdi:plus-circle" />
     </button>
   </div>
-  <div class="flex" v-if="type === 'skills'">
-    <UserCardTagPill v-for="(data, index) in userStore.userData.skills" :skill="data" :key="index" />
+  <div class="flex flex-wrap justify-start gap-2 mt-2" v-if="type === 'skill'">
+    <UserCardTagPill v-for="(data, index) in userStore.userData.skills" :skill="data" :key="index" clearable @remove-skill="editService.removeFromList('skill', index)" />
   </div>
-  <div class="flex" v-else>
-    <UserCardTagPill v-for="(data, index) in userStore.userData.social" :skill="data" :key="index" />
+  <div class="flex flex-wrap justify-start gap-2 mt-2" v-else>
+    <UserCardTagPill v-for="(data, index) in userStore.userData.social" :skill="data" :key="index" clearable @remove-skill="editService.removeFromList('link', index)"/>
   </div>
 </div>
 </template>

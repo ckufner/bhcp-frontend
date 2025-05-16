@@ -28,7 +28,7 @@ const userStore = userEditStore()
       <span class="block mt-2">{{userStore.userData.description.length}} / 255</span>
     </div>
   </div>
-  <UserDrawerMultiEdit type="skills" />
+  <UserDrawerMultiEdit type="skill" />
   <UserDrawerMultiEdit type="link" />
   <div class="flex flex-row items-center justify-between">
     <button class="py-2 px-8 rounded bg-primary-dark text-white" @click="userStore.drawerShow = false">Abbrechen</button>
