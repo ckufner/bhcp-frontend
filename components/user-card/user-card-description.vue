@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="my-6 mx-3 text-gray-500 text-sm text-center">
+  <div class="my-3 mx-3 text-gray-500 text-sm text-center">
     {{description}}
   </div>
 </template>
