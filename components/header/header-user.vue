@@ -11,7 +11,3 @@ const editUser = userEditStore()
     <Icon class="ml-4" name="mdi:chevron-right" />
 </button>
 </template>
-
-<style scoped>
-
-</style>
