@@ -14,7 +14,8 @@ export const userEditStore = defineStore('userEditStore', () => {
         },
         description: '',
         skills: [],
-        socialLinks: []
+        socialLinks: [],
+        email: ''
     })
     const userData = reactive<UserDto>({
         id: '1',
@@ -25,7 +26,8 @@ export const userEditStore = defineStore('userEditStore', () => {
         },
         description: '',
         skills: [],
-        socialLinks: []
+        socialLinks: [],
+        email: ''
     })
 
     const userDataString = ref<string>('')

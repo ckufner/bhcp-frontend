@@ -19,6 +19,10 @@ const userEditService = useUserEditService()
     <input class="bg-white border border-text p-2 rounded" id="name" type="text" v-model="userStore.userData.imageUrl" />
   </div>
   <div class="flex flex-col lg:mb-8 mb-4">
+    <label class="text-sm" for="name">EMail:</label>
+    <input class="bg-white border border-text p-2 rounded" id="name" type="email" v-model="userStore.userData.email" />
+  </div>
+  <div class="flex flex-col lg:mb-8 mb-4">
     <label class="text-sm" for="name">Name:</label>
     <input class="bg-white border border-text p-2 rounded" id="name" type="text" v-model="userStore.userData.name" />
   </div>
@@ -33,15 +37,21 @@ const userEditService = useUserEditService()
       <span class="block mt-2">{{userStore.userData.description.length}} / 255</span>
     </div>
   </div>
+  <div class="flex items-center lg:mb-8 mb-4">
+    <input
+      id="active"
+      type="checkbox"
+      class="mr-2 text-2xl w-6 h-6 checked:bg-primary"
+      :checked="userStore.userData.visible === true"
+      @change="userStore.userData.visible = $event.target.checked"
+    />
+    <label for="active">Visible</label>
+  </div>
   <UserDrawerMultiEdit type="skill" />
   <UserDrawerMultiEdit type="link" />
   <div class="flex flex-row items-center justify-between">
     <button class="cursor-pointer  py-2 px-8 rounded hover:bg-primary-dark-hover hover:border-primary-darker-hover bg-primary-dark text-white border-b-[4px] border-b-primary-darker border-solid" @click="userStore.drawerShow = false">Abbrechen</button>
-    <button :disabled="JSON.stringify(userStore.userData) === userStore.userDataString" @click="userEditService.editUser()" class="disabled:cursor-not-allowed cursor-pointer hover:bg-primary-hover hover:border-primary-dark-hover py-2 px-8 rounded bg-primary text-white border-b-[4px] border-b-primary-dark border-solid">Speichern</button>
+    <button  @click="userEditService.editUser()" class="disabled:cursor-not-allowed cursor-pointer hover:bg-primary-hover hover:border-primary-dark-hover py-2 px-8 rounded bg-primary text-white border-b-[4px] border-b-primary-dark border-solid">Speichern</button>
   </div>
 </div>
 </template>
-
-<style scoped>
-
-</style>

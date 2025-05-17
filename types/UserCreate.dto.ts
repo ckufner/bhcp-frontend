@@ -7,4 +7,6 @@ export interface UserCreateDto {
     description: string
     skills: string[],
     socialLinks: string[]
+    visible?: boolean
+    email: string
 }

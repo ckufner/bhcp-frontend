@@ -25,6 +25,9 @@ watch(() => userCardStore.userSearchQuery, (newVal) => {
     <button @click="initalLoadUsers()" :disabled="userCardStore.userSearchQuery === ''" class="disabled:cursor-not-allowed bg-primary p-2 flex items-center rounded cursor-pointer hover:bg-primary-hover hover:border-b-primary-dark-hover border-primary-dark border-b-[4px] border-solid">
       <Icon name="mdi:magnify" class="text-2xl text-white"/>
     </button>
+    <div v-for="(filters, index) in userCardStore.userFilter" :key="index">
+      <UserCardTagPill @remove-skill="userCardService.removeFilter(index)" :clearable="true" :skill="filters"/>
+    </div>
   </div>
 </div>
 </template>
