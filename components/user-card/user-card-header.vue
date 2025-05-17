@@ -18,9 +18,9 @@ const isImageLoading = ref(true)
       :src="imageUrl"
       alt="test-user"
       @error="($event.target as HTMLImageElement).src = backUpUrl"
-      @load="isImageLoading.value = false"
+      @load="isImageLoading = false"
     />
-    <Icon v-if="isImageLoading.value" class="leading-0 ml-4 mt-1 p-2" name="mdi:close-circle" />
+    <Icon v-if="isImageLoading" class="leading-0 ml-4 mt-1 p-2" name="mdi:close-circle" />
   </div>
   <p class="text-primary font-bold text-2xl">{{name}}</p>
   <p class="text-primary">{{team}}</p>

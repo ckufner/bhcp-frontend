@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import {useUserCardStore} from "~/store/user-card.store";
+import { watch } from 'vue'
+import { useUserCardStore } from "~/store/user-card.store"
+import { userCardService } from '~/composables/user-card.service'
 
 const userCardStore = useUserCardStore()
+const { initalLoadUsers } = userCardService()
 </script>
 
 <template>
 <div class="w-full p-4 bg-gray-200 rounded my-16">
   <label class="text-sm" for="name">Suche nach Name, Team oder Skills:</label>
   <div class="flex gap-4 mt-3">
-    <input class="bg-white border border-text p-2 rounded w-2/5" id="name" type="text" v-model="userCardStore.userSearchQuery" />
-    <button class="bg-primary p-2 flex items-center rounded cursor-pointer hover:bg-primary-hover hover:border-b-primary-dark-hover border-primary-dark border-b-[4px] border-solid">
+    <input class="bg-white border border-text p-2 rounded w-2/5" id="name" type="text" v-model="userCardStore.userSearchQuery" @keyup.enter="initalLoadUsers()" />
+    <button @click="initalLoadUsers()" class="bg-primary p-2 flex items-center rounded cursor-pointer hover:bg-primary-hover hover:border-b-primary-dark-hover border-primary-dark border-b-[4px] border-solid">
       <Icon name="mdi:magnify" class="text-2xl text-white"/>
     </button>
   </div>
