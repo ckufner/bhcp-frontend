@@ -4,8 +4,23 @@ import { useRuntimeConfig } from '#imports';
 
 export function useUserEditService() {
     const editStore = userEditStore()
-    const config = useRuntimeConfig();
-    const apiBase = config.public.apiBase;
+    const config = useRuntimeConfig()
+    const apiBase = config.public.apiBase
+
+    const loadUser = async () => {
+        try {
+            const userId = editStore.editData.id;
+            if (!userId) {
+                console.warn('No user ID provided to loadUser')
+                return
+            }
+            const user = await $fetch<UserDto>(`${apiBase}/api/user/${userId}`)
+            editStore.editData = user
+            console.log('User loaded:', user)
+        } catch (error) {
+            console.error('Failed to load user:', error)
+        }
+    }
 
     const editUser = async () => {
         try {
@@ -55,6 +70,7 @@ export function useUserEditService() {
         addToList,
         removeFromList,
         editUser,
-        createUser
+        createUser,
+        loadUser
     }
 }

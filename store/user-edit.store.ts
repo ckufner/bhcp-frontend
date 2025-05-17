@@ -6,7 +6,7 @@ export const userEditStore = defineStore('userEditStore', () => {
     const skillToAdd = ref('')
     const linkToAdd = ref('')
     const editData = reactive<UserDto>({
-        id: '',
+        id: '1',
         imageUrl: '',
         name: '',
         team: {

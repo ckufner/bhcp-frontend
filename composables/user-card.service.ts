@@ -17,6 +17,13 @@ export function userCardService(){
         userCardStore.user = response.data
     }
 
+    const loadScrollUsers = async () => {
+        const queryParam = userCardStore.userSearchQuery ? `?=${encodeURIComponent(userCardStore.userSearchQuery)}` : ''
+        console.log(`${apiBase}/api/user${queryParam}`)
+        const response = await $fetch<{ data: UserDto[] }>(`${apiBase}/api/user${queryParam}`)
+        userCardStore.user.push(...response.data)
+    }
+
     const addFilter = async (filter: string) => {
         //userCardStore.userFilter.push(filter)
         //await initalLoadUsers()
@@ -152,6 +159,7 @@ export function userCardService(){
         setDetailUser,
         loadMoreData,
         initalLoadUsers,
-        addFilter
+        addFilter,
+        loadScrollUsers
     }
 }

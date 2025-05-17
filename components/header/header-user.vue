@@ -2,6 +2,11 @@
 import {userEditStore} from "~/store/user-edit.store";
 
 const editUser = userEditStore()
+const editService = useUserEditService()
+
+onMounted(() => {
+  editService.loadUser()
+})
 </script>
 
 <template>

@@ -31,7 +31,7 @@ onMounted(() => {
 </script>
 <template>
   <div class="font-inter p-8 relative">
-    <HeaderBar></HeaderBar>
+    <HeaderBar />
     <SearchBar />
     <UserDrawer />
     <UserCard />
