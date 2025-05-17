@@ -49,6 +49,7 @@ onUnmounted(() => {
         <UserCardHeader
             :name="userCardStore.userDetail.name"
             :team="userCardStore.userDetail.team.name"
+            :image-url="userCardStore.userDetail.imageUrl"
         />
         <UserCardDescription :description="userCardStore.userDetail.description" />
         <div class="flex flex-wrap justify-center gap-2 my-4">

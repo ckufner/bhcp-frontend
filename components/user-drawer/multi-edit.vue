@@ -5,6 +5,18 @@ defineProps<{
 }>()
 const userStore = userEditStore()
 const editService = useUserEditService()
+
+function getPlatformName(url: string): string {
+  try {
+    const parsedUrl = new URL(url)
+    const hostname = parsedUrl.hostname.replace(/^www\./, '')
+    const domainParts = hostname.split('.')
+    return domainParts[0].charAt(0).toUpperCase() + domainParts[0].slice(1)
+  } catch (error) {
+    console.error('Ungültige URL:', url)
+    return url
+  }
+}
 </script>
 
 <template>
@@ -21,7 +33,7 @@ const editService = useUserEditService()
     <UserCardTagPill v-for="(data, index) in userStore.userData.skills" :skill="data" :key="index" clearable @remove-skill="editService.removeFromList('skill', index)" />
   </div>
   <div class="flex flex-wrap justify-start gap-2 mt-2" v-else>
-    <UserCardTagPill v-for="(data, index) in userStore.userData.social" :skill="data" :key="index" clearable @remove-skill="editService.removeFromList('link', index)"/>
+    <UserCardTagPill v-for="(data, index) in userStore.userData.social" :skill="getPlatformName(data)" :key="index" clearable @remove-skill="editService.removeFromList('link', index)"/>
   </div>
 </div>
 </template>
