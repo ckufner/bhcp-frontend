@@ -12,12 +12,14 @@ const useUserCardService = userCardService()
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <div v-for="(user, index) in userCardStore.user" :key="index">
       <div
+          tabindex="0"
           @click="useUserCardService.setDetailUser(user)"
-          class="cursor-pointer rounded-3xl shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.2),0_10px_15px_-3px_rgba(0,0,0,0.2)] hover:shadow-[0_-12px_18px_-3px_rgba(0,0,0,0.25),0_12px_18px_-3px_rgba(0,0,0,0.25)] transition-shadow duration-200 my-3 mx-3 h-[320px] bg-main-white"
+          @keyup.enter="useUserCardService.setDetailUser(user)"
+          class="cursor-pointer rounded-3xl shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.2),0_10px_15px_-3px_rgba(0,0,0,0.2)] focus:shadow-[0_-12px_18px_-3px_rgba(0,0,0,0.25),0_12px_18px_-3px_rgba(0,0,0,0.25)] hover:shadow-[0_-12px_18px_-3px_rgba(0,0,0,0.25),0_12px_18px_-3px_rgba(0,0,0,0.25)] transition-shadow duration-200 my-3 mx-3 h-[320px] bg-main-white"
       >
         <div class="flex items-center justify-between flex-col h-full">
           <div class="flex items-center flex-col h-full">
-            <user-card-header :name="user.name" :team="user.team.name"/>
+            <user-card-header :name="user.name" :team="user.team.name" :imageUrl="user.imageUrl"/>
             <user-card-description :description="user.description"/>
             <div class="flex justify-center gap-2 flex-wrap">
               <template v-for="(skill, index) in user.skills.slice(0, 5)" :key="index">

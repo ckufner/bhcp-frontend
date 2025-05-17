@@ -10,11 +10,25 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
   ],
+  runtimeConfig: {
+    public: {
+      apiBase: 'http://localhost:3000/'
+    }
+  },
   css: ['~/assets/css/main.css'],
   vite: {
     plugins: [
       tailwindcss(),
     ],
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8080',
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/api/, '/api'),
+        }
+      }
+    }
   },
   fonts: {
     defaults: {

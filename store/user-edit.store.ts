@@ -5,6 +5,17 @@ export const userEditStore = defineStore('userEditStore', () => {
     const drawerShow = ref(false)
     const skillToAdd = ref('')
     const linkToAdd = ref('')
+    const editData = reactive<UserDto>({
+        id: '',
+        imageUrl: '',
+        name: '',
+        team: {
+            name: ''
+        },
+        description: '',
+        skills: [],
+        social: []
+    })
     const userData = reactive<UserCreateDto>({
         imageUrl: '',
         name: '',
@@ -20,6 +31,7 @@ export const userEditStore = defineStore('userEditStore', () => {
         drawerShow,
         userData,
         skillToAdd,
-        linkToAdd
+        linkToAdd,
+        editData
     }
 })

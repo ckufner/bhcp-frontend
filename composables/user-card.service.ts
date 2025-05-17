@@ -1,3 +1,4 @@
+import { useRuntimeConfig } from '#imports';
 import {useUserCardStore} from "~/store/user-card.store";
 import type { UserDto } from '~/types/User.dto'
 
@@ -6,9 +7,11 @@ export function userCardService(){
     const userCardStore = useUserCardStore()
 
     const initalLoadUsers = async () => {
-            const queryParam = userCardStore.userSearchQuery ? `?q=${encodeURIComponent(userCardStore.userSearchQuery )}` : ''
-            const response = await $fetch<{ data: UserDto[] }>(`/api/user${queryParam}`)
-            userCardStore.user = response.data
+        const config = useRuntimeConfig();
+        const apiBase = config.public.apiBase
+        const queryParam = userCardStore.userSearchQuery ? `?q=${encodeURIComponent(userCardStore.userSearchQuery)}` : ''
+        const response = await $fetch<{ data: UserDto[] }>(`${apiBase}/api/user${queryParam}`)
+        userCardStore.user = response.data
     }
 
     const getAllUsers = () => {

@@ -1,7 +1,35 @@
 import {userEditStore} from "~/store/user-edit.store";
+import type {UserDto} from "~/types/User.dto";
+import { useRuntimeConfig } from '#imports';
 
 export function useUserEditService() {
     const editStore = userEditStore()
+    const config = useRuntimeConfig();
+    const apiBase = config.public.apiBase;
+
+    const editUser = async () => {
+        try {
+            const response = await $fetch<UserDto>(`${apiBase}/api/user/${editStore.editData.id}`, {
+                method: 'PUT',
+                body: editStore.userData,
+            })
+            console.log('User updated:', response)
+        } catch (error) {
+            console.error('Failed to update user:', error)
+        }
+    }
+
+    const createUser = async () => {
+        try {
+            const response = await $fetch<UserDto>(`${apiBase}/api/user`, {
+                method: 'POST',
+                body: editStore.userData,
+            })
+            console.log('User created:', response)
+        } catch (error) {
+            console.error('Failed to create user:', error)
+        }
+    }
 
     const addToList = (type: 'skill' | 'link') => {
         if (type === 'skill' && editStore.skillToAdd !== '') {
@@ -25,6 +53,8 @@ export function useUserEditService() {
 
     return {
         addToList,
-        removeFromList
+        removeFromList,
+        editUser,
+        createUser
     }
 }
