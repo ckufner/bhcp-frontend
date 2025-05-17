@@ -16,16 +16,22 @@ const handleImageError = (event: Event) => {
 }
 
 const isImageLoading = ref(true)
+
+const onImageLoad = () => {
+  setTimeout(() => {
+    isImageLoading.value = false
+  }, 100)
+}
 </script>
 
 <template>
   <div class="relative w-16 h-16 -mt-8">
     <img
       class="w-full h-full rounded-full border-[3px] border-white shadow-xl absolute top-0 left-0"
-      :src="imageUrl"
+      :src="imageUrl === null? handleImageError : imageUrl"
       alt="test-user"
       @error="handleImageError"
-      @load="isImageLoading = false"
+      @load="onImageLoad"
     />
     <Icon v-if="isImageLoading" class="w-full h-full text-6xl ml-0.5 mt-0.5 rounded-full spinner top-0 left-0 absolute" name="mdi:loading" />
   </div>

@@ -1,7 +1,6 @@
 import { useRuntimeConfig } from '#imports'
 import {useUserCardStore} from "~/store/user-card.store"
 import type { UserDto } from '~/types/User.dto'
-import { ref } from 'vue'
 
 
 export function userCardService(){
@@ -11,12 +10,12 @@ export function userCardService(){
 
     const initalLoadUsers = async () => {
         userCardStore.loading = true
+        userCardStore.page = 0
+        userCardStore.count = 6
         try {
-            const queryParam = `?count=${userCardStore.count}&page=${userCardStore.page}` +
-                (userCardStore.userSearchQuery ? `&search=${encodeURIComponent(userCardStore.userSearchQuery)}` : '')
-            console.log(`${apiBase}/api/user${queryParam}`)
-            const response = await $fetch<{ data: UserDto[] }>(`${apiBase}/api/user${queryParam}`)
-            userCardStore.user = response.data
+            const queryParam = `?query=${encodeURIComponent(userCardStore.userSearchQuery || '')}&page=${userCardStore.page}&size=${userCardStore.count}`
+            const response = await $fetch<{ data: UserDto[] }>(`${apiBase}/api/users/${queryParam}`)
+            userCardStore.user = response.items
         } catch (error) {
             console.error('Failed to load initial users:', error)
         } finally {
@@ -27,12 +26,15 @@ export function userCardService(){
     const loadScrollUsers = async () => {
         userCardStore.loading = true
         try {
-            userCardStore.page++
-            const queryParam = `?count=${userCardStore.count}&page=${userCardStore.page}` +
-                (userCardStore.userSearchQuery ? `&search=${encodeURIComponent(userCardStore.userSearchQuery)}` : '')
-            console.log(`${apiBase}/api/user${queryParam}`)
-            const response = await $fetch<{ data: UserDto[] }>(`${apiBase}/api/user${queryParam}`)
-            userCardStore.user.push(...response.data)
+            if(!userCardStore.lastPage){
+                userCardStore.page++
+                const queryParam = `?query=${encodeURIComponent(userCardStore.userSearchQuery || '')}&page=${userCardStore.page}&size=${userCardStore.count}`
+                const response = await $fetch<{ data: UserDto[] }>(`${apiBase}/api/users/${queryParam}`)
+                userCardStore.user.push(...response.items)
+                userCardStore.lastPage = response.last
+            } else {
+                userCardStore.loading = false
+            }
         } catch (error) {
             console.error('Failed to load scroll users:', error)
         } finally {
@@ -55,7 +57,7 @@ export function userCardService(){
                 team: { name: "Development" },
                 description: "Alice is a seasoned frontend developer with a passion for creating intuitive user interfaces. She has over 5 years of experience in building responsive web applications.",
                 skills: ["JavaScript", "Vue.js", "CSS", "HTML"],
-                social: ["https://twitter.com/alicejohnson", "https://github.com/alicejohnson"]
+                socialLinks: ["https://twitter.com/alicejohnson", "https://github.com/alicejohnson"]
             },
             {
                 id: "2",
@@ -64,7 +66,7 @@ export function userCardService(){
                 team: { name: "Marketing" },
                 description: "Bob is a creative marketing specialist who excels in digital campaigns and brand strategy. He has a knack for connecting with audiences and driving engagement.",
                 skills: ["SEO", "Content Marketing", "Social Media"],
-                social: ["https://linkedin.com/in/bobsmith", "https://twitter.com/bobsmith"]
+                socialLinks: ["https://linkedin.com/in/bobsmith", "https://twitter.com/bobsmith"]
             },
             {
                 id: "3",
@@ -73,7 +75,7 @@ export function userCardService(){
                 team: { name: "Design" },
                 description: "Carol is a talented UI/UX designer with a keen eye for detail. She specializes in creating user-centered designs that enhance user experience and satisfaction.",
                 skills: ["Figma", "Sketch", "Adobe XD"],
-                social: ["https://dribbble.com/carolwilliams", "https://behance.net/carolwilliams"]
+                socialLinks: ["https://dribbble.com/carolwilliams", "https://behance.net/carolwilliams"]
             },
             {
                 id: "4",
@@ -82,7 +84,7 @@ export function userCardService(){
                 team: { name: "Engineering" },
                 description: "David is a backend engineer with expertise in building scalable server-side applications. He is proficient in various programming languages and database systems.",
                 skills: ["Node.js", "Python", "SQL", "MongoDB"],
-                social: ["https://github.com/davidlee", "https://linkedin.com/in/davidlee"]
+                socialLinks: ["https://github.com/davidlee", "https://linkedin.com/in/davidlee"]
             },
             {
                 id: "5",
@@ -91,7 +93,7 @@ export function userCardService(){
                 team: { name: "Product" },
                 description: "Eva is a product manager who bridges the gap between technical teams and customer needs. She has a strong background in agile methodologies and product lifecycle management.",
                 skills: ["Agile", "Scrum", "Product Roadmapping", "Beer", "Threeshakeing", "Drinking"],
-                social: ["https://twitter.com/evamartinez", "https://linkedin.com/in/evamartinez"]
+                socialLinks: ["https://twitter.com/evamartinez", "https://linkedin.com/in/evamartinez"]
             },
             {
                 id: "6",
@@ -100,7 +102,7 @@ export function userCardService(){
                 team: { name: "Operations" },
                 description: "Frank ensures that day-to-day operations run smoothly and efficiently. He is skilled in logistics, process optimization, and resource management.",
                 skills: ["Logistics", "Operations Management", "Excel", "Strategy"],
-                social: ["https://linkedin.com/in/frankturner"]
+                socialLinks: ["https://linkedin.com/in/frankturner"]
             }
         ]
     }

@@ -6,5 +6,5 @@ export interface UserCreateDto {
     team: UserCreateTeamDto,
     description: string
     skills: string[],
-    social: string[]
+    socialLinks: string[]
 }

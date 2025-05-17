@@ -16,7 +16,8 @@ export const userEditStore = defineStore('userEditStore', () => {
         skills: [],
         social: []
     })
-    const userData = reactive<UserCreateDto>({
+    const userData = reactive<UserDto>({
+        id: '1',
         imageUrl: '',
         name: '',
         team: {

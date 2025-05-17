@@ -9,13 +9,13 @@ export function useUserEditService() {
 
     const loadUser = async () => {
         try {
-            const userId = editStore.editData.id;
+            const userId = editStore.editData.id
             if (!userId) {
                 console.warn('No user ID provided to loadUser')
                 return
             }
-            const user = await $fetch<UserDto>(`${apiBase}/api/user/${userId}`)
-            editStore.editData = user
+            const user = await $fetch<UserDto>(`${apiBase}/api/users/${userId}`)
+            editStore.userData = user
             console.log('User loaded:', user)
         } catch (error) {
             console.error('Failed to load user:', error)
@@ -52,7 +52,7 @@ export function useUserEditService() {
             editStore.skillToAdd = ''
         }
         if (type === 'link' && editStore.linkToAdd !== '') {
-            editStore.userData.social.push(editStore.linkToAdd)
+            editStore.userData.socialLinks.push(editStore.linkToAdd)
             editStore.linkToAdd = ''
         }
     }
@@ -62,7 +62,7 @@ export function useUserEditService() {
             editStore.userData.skills.splice(index, 1)
         }
         if (type === 'link' && index > -1) {
-            editStore.userData.social.splice(index, 1)
+            editStore.userData.socialLinks.splice(index, 1)
         }
     }
 

@@ -10,6 +10,7 @@ export const useUserCardStore = defineStore('user-card-store', () => {
     const loading = ref<boolean>(false)
     const count = ref<number>(6)
     const page = ref<number>(0)
+    const lastPage = ref<boolean>(false)
 
     return {
         user,
@@ -18,6 +19,7 @@ export const useUserCardStore = defineStore('user-card-store', () => {
         userFilter,
         loading,
         count,
-        page
+        page,
+        lastPage
     }
 })

@@ -7,13 +7,13 @@ import {userCardService} from "~/composables/user-card.service"
 
 const useUserCardService = userCardService()
 
-const handleScroll = () => {
+const handleScroll = async () => {
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
   const windowHeight = window.innerHeight;
   const fullHeight = document.documentElement.scrollHeight;
 
-  if (scrollTop + windowHeight + 100 >= fullHeight) {
-    useUserCardService.loadMoreData()
+  if (scrollTop + windowHeight + 50 >= fullHeight) {
+    await useUserCardService.loadScrollUsers()
   }
 }
 
@@ -26,7 +26,7 @@ onUnmounted(() => {
 })
 
 onMounted(() => {
-  useUserCardService.getAllUsers()
+  useUserCardService.initalLoadUsers()
 })
 </script>
 <template>

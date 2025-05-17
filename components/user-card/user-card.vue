@@ -2,7 +2,7 @@
 import UserCardHeader from '~/components/user-card/user-card-header.vue'
 import { useUserCardStore } from '~/store/user-card.store'
 import { userCardService } from '~/composables/user-card.service'
-import UserCardDetail from "~/components/user-card/user-card-detail.vue";
+import UserCardDetail from "~/components/user-card/user-card-detail.vue"
 
 const userCardStore = useUserCardStore()
 const useUserCardService = userCardService()
@@ -28,7 +28,7 @@ const useUserCardService = userCardService()
               <span v-if="user.skills.length > 5" class="text-gray-500 text-sm mt-1">...</span>
             </div>
           </div>
-          <user-card-links :socials="user.social"/>
+          <user-card-links :socials="user.socialLinks"/>
         </div>
       </div>
     </div>

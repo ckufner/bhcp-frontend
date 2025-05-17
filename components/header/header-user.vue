@@ -11,8 +11,13 @@ onMounted(() => {
 
 <template>
 <button @click="editUser.drawerShow = true" class="cursor-pointer flex items-center ml-auto focus:outline-[2px] focus:outline-primary focus:bg-light-grey">
-    <img class="lg:w-16 lg:h-16 w-8 h-8 rounded-full border-[3px] border-white shadow-xl" src="https://www.pnrao.com/wp-content/uploads/2023/06/dummy-user-male.jpg" alt="test-user" />
-    <span class="font-bold ml-4">John Doe</span>
-    <Icon class="ml-4" name="mdi:chevron-right" />
+  <div v-if="editUser.userData.imageUrl !== '' && editUser.userData.imageUrl !== null" class="lg:w-16 lg:h-16 w-8 h-8 rounded-full border-[3px] border-white shadow-xl">
+    <img class="w-full h-full object-cover" :src="editUser.userData.imageUrl" alt="user avatar" />"
+  </div>
+  <div v-else class="rounded-full shadow-lg lg:w-16 lg:h-16 w-8 h-8 border-[3px] border-white">
+    <img src="~/assets/img/avatar.svg" alt="user avatar" />
+  </div>
+  <span class="font-bold ml-4">{{editUser.userData.name}}</span>
+  <Icon class="ml-4" name="mdi:chevron-right" />
 </button>
 </template>
