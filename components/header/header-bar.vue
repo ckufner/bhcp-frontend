@@ -1,5 +1,7 @@
 <script setup lang="ts">
-
+const refreshPage = () => {
+  window.location.reload()
+}
 </script>
 
 <template>
@@ -13,7 +15,14 @@
     </svg>
     </a>
   </div>
-  <div class="lg:block hidden w-full text-center">
+  <div
+      class="lg:block hidden w-full text-center cursor-pointer"
+      role="button"
+      tabindex="0"
+      @click="refreshPage"
+      @keydown.enter.prevent="refreshPage"
+      @keydown.space.prevent="refreshPage"
+  >
     <h1 class="text-primary text-6xl font-[900]">hackaPROFILES</h1>
   </div>
   <div class="w-[280px]">

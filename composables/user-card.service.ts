@@ -1,6 +1,7 @@
 import { useRuntimeConfig } from '#imports'
 import {useUserCardStore} from "~/store/user-card.store"
 import type { UserDto } from '~/types/User.dto'
+import { ref } from 'vue'
 
 
 export function userCardService(){
@@ -8,20 +9,35 @@ export function userCardService(){
     const config = useRuntimeConfig()
     const apiBase = config.public.apiBase
 
-
     const initalLoadUsers = async () => {
-        userCardStore.user = []
-        const queryParam = userCardStore.userSearchQuery ? `?=${encodeURIComponent(userCardStore.userSearchQuery)}` : ''
-        console.log(`${apiBase}/api/user${queryParam}`)
-        const response = await $fetch<{ data: UserDto[] }>(`${apiBase}/api/user${queryParam}`)
-        userCardStore.user = response.data
+        userCardStore.loading = true
+        try {
+            const queryParam = `?count=${userCardStore.count}&page=${userCardStore.page}` +
+                (userCardStore.userSearchQuery ? `&search=${encodeURIComponent(userCardStore.userSearchQuery)}` : '')
+            console.log(`${apiBase}/api/user${queryParam}`)
+            const response = await $fetch<{ data: UserDto[] }>(`${apiBase}/api/user${queryParam}`)
+            userCardStore.user = response.data
+        } catch (error) {
+            console.error('Failed to load initial users:', error)
+        } finally {
+            userCardStore.loading = false
+        }
     }
 
     const loadScrollUsers = async () => {
-        const queryParam = userCardStore.userSearchQuery ? `?=${encodeURIComponent(userCardStore.userSearchQuery)}` : ''
-        console.log(`${apiBase}/api/user${queryParam}`)
-        const response = await $fetch<{ data: UserDto[] }>(`${apiBase}/api/user${queryParam}`)
-        userCardStore.user.push(...response.data)
+        userCardStore.loading = true
+        try {
+            userCardStore.page++
+            const queryParam = `?count=${userCardStore.count}&page=${userCardStore.page}` +
+                (userCardStore.userSearchQuery ? `&search=${encodeURIComponent(userCardStore.userSearchQuery)}` : '')
+            console.log(`${apiBase}/api/user${queryParam}`)
+            const response = await $fetch<{ data: UserDto[] }>(`${apiBase}/api/user${queryParam}`)
+            userCardStore.user.push(...response.data)
+        } catch (error) {
+            console.error('Failed to load scroll users:', error)
+        } finally {
+            userCardStore.loading = false
+        }
     }
 
     const addFilter = async (filter: string) => {
@@ -89,7 +105,8 @@ export function userCardService(){
         ]
     }
 
-    const loadMoreData = () => {
+    const loadMoreData = async () => {
+        userCardStore.loading = true
         const moreUsers = [
             {
                 id: "7",
@@ -146,6 +163,11 @@ export function userCardService(){
                 social: ["https://linkedin.com/in/laurastone"]
             }
         ]
+
+        await new Promise(resolve => setTimeout(resolve, 3000))
+            .then(() => {
+                userCardStore.loading = false
+            })
 
         userCardStore.user = [...userCardStore.user, ...moreUsers];
     }

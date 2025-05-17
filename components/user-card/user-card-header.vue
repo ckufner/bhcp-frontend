@@ -10,7 +10,11 @@ defineProps<{
 
 const useUserCardService = userCardService()
 
-const backUpUrl = 'https://www.pnrao.com/wp-content/uploads/2023/06/dummy-user-male.jpg'
+const handleImageError = (event: Event) => {
+  const target = event.target as HTMLImageElement
+  target.src = new URL('~/assets/img/avatar.svg', import.meta.url).href
+}
+
 const isImageLoading = ref(true)
 </script>
 
@@ -20,7 +24,7 @@ const isImageLoading = ref(true)
       class="w-full h-full rounded-full border-[3px] border-white shadow-xl absolute top-0 left-0"
       :src="imageUrl"
       alt="test-user"
-      @error="($event.target as HTMLImageElement).src = backUpUrl"
+      @error="handleImageError"
       @load="isImageLoading = false"
     />
     <Icon v-if="isImageLoading" class="w-full h-full text-6xl ml-0.5 mt-0.5 rounded-full spinner top-0 left-0 absolute" name="mdi:loading" />

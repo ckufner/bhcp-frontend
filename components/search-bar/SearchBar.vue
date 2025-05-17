@@ -1,9 +1,16 @@
 <script setup lang="ts">
+import { watch } from 'vue'
 import { useUserCardStore } from "~/store/user-card.store"
 import { userCardService } from '~/composables/user-card.service'
 
 const userCardStore = useUserCardStore()
 const { initalLoadUsers } = userCardService()
+
+watch(() => userCardStore.userSearchQuery, (newVal) => {
+  if (newVal === '') {
+    initalLoadUsers()
+  }
+})
 </script>
 
 <template>
