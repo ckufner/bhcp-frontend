@@ -59,7 +59,7 @@ onUnmounted(() => {
               :skill="skill"
           />
         </div>
-        <UserCardLinks :socials="userCardStore.userDetail.social" />
+        <UserCardLinks :socials="userCardStore.userDetail.socialLinks" />
       </div>
     </div>
   </div>

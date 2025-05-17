@@ -16,6 +16,7 @@ export function userCardService(){
             const queryParam = `?query=${encodeURIComponent(userCardStore.userSearchQuery || '')}&page=${userCardStore.page}&size=${userCardStore.count}`
             const response = await $fetch<{ data: UserDto[] }>(`${apiBase}/api/users/${queryParam}`)
             userCardStore.user = response.items
+            userCardStore.lastPage = response.last
         } catch (error) {
             console.error('Failed to load initial users:', error)
         } finally {

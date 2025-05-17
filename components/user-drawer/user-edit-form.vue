@@ -37,7 +37,7 @@ const userEditService = useUserEditService()
   <UserDrawerMultiEdit type="link" />
   <div class="flex flex-row items-center justify-between">
     <button class="cursor-pointer  py-2 px-8 rounded hover:bg-primary-dark-hover hover:border-primary-darker-hover bg-primary-dark text-white border-b-[4px] border-b-primary-darker border-solid" @click="userStore.drawerShow = false">Abbrechen</button>
-    <button @click="userEditService.editUser()" class="cursor-pointer hover:bg-primary-hover hover:border-primary-dark-hover py-2 px-8 rounded bg-primary text-white border-b-[4px] border-b-primary-dark border-solid">Speichern</button>
+    <button :disabled="JSON.stringify(userStore.userData) === userStore.userDataString" @click="userEditService.editUser()" class="disabled:cursor-not-allowed cursor-pointer hover:bg-primary-hover hover:border-primary-dark-hover py-2 px-8 rounded bg-primary text-white border-b-[4px] border-b-primary-dark border-solid">Speichern</button>
   </div>
 </div>
 </template>

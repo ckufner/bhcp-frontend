@@ -1,11 +1,13 @@
 import {userEditStore} from "~/store/user-edit.store";
 import type {UserDto} from "~/types/User.dto";
-import { useRuntimeConfig } from '#imports';
+import {userCardService, useRuntimeConfig} from '#imports';
 
 export function useUserEditService() {
     const editStore = userEditStore()
     const config = useRuntimeConfig()
     const apiBase = config.public.apiBase
+    const useUserCardService = userCardService()
+
 
     const loadUser = async () => {
         try {
@@ -16,6 +18,7 @@ export function useUserEditService() {
             }
             const user = await $fetch<UserDto>(`${apiBase}/api/users/${userId}`)
             editStore.userData = user
+            editStore.userDataString = JSON.stringify(user)
             console.log('User loaded:', user)
         } catch (error) {
             console.error('Failed to load user:', error)
@@ -24,10 +27,12 @@ export function useUserEditService() {
 
     const editUser = async () => {
         try {
-            const response = await $fetch<UserDto>(`${apiBase}/api/user/${editStore.editData.id}`, {
+            const response = await $fetch<UserDto>(`${apiBase}/api/users/${editStore.userData.id}`, {
                 method: 'PUT',
                 body: editStore.userData,
             })
+            useUserCardService.initalLoadUsers()
+            editStore.drawerShow = false
             console.log('User updated:', response)
         } catch (error) {
             console.error('Failed to update user:', error)
